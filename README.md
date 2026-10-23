@@ -1,6 +1,6 @@
 # Datheon Python Internship
 
-Submission repository for the Datheon Python Programming Internship.
+Submission repository for the Datheon Python Programming Internship. 
 
 ## Tasks
 
