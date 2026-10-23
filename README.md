@@ -7,7 +7,7 @@ Submission repository for the Datheon Python Programming Internship.
 | # | Task | Folder | Status |
 |---|------|--------|--------|
 | 1 | Hangman Word Guessing Game (Console) | [`task1_hangman/`](task1_hangman) | Complete |
-| 2 | _Add your second task here_ | `task2_.../` | Pending |
+| 2 | Stock Portfolio Performance Tracker | [`task2_portfolio/`](task2_portfolio) | Complete |
 | 3 | _Optional third task_ | `task3_.../` | Pending |
 
 ---
@@ -71,6 +71,28 @@ play_round()
 | `main()` | Top-level loop and score tracking |
 
 **Data structures:** a `set` holds guessed letters (fast lookup, automatically prevents duplicates), a `list` holds the 7 ASCII gallows stages indexed by the wrong-guess count, and a `list` holds the word bank.
+
+# Task 2: Stock Portfolio Performance Tracker
+
+A command-line utility that values entered stock holdings, calculates gain or loss per holding and for the portfolio, and appends timestamped snapshots to a CSV file.
+
+## Features
+- Accepts ticker symbols, purchase prices, and share quantities
+- Retrieves the latest available regular-market prices from Yahoo Finance
+- Displays invested value, current value, and percentage return
+- Appends holding and portfolio totals to `portfolio_summary.csv`
+- Uses only Python's standard library; a network connection is required for quotes
+
+## Installation and Usage
+
+Requirements: Python 3.8 or newer. No external libraries are needed.
+
+```bash
+cd task2_portfolio
+python3 portfolio.py
+```
+
+Quotes may be delayed or reflect the last market close. Pass `--csv PATH` to write snapshots to a different CSV file.
 
 ## Author
 Charan
