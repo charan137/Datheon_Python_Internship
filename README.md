@@ -31,7 +31,7 @@ python hangman.py
 1. A random word is chosen and shown as underscores.
 2. Type one letter per turn and press Enter.
 3. Correct letters are revealed in place; wrong letters add a part to the hangman.
-4. Reveal the whole word to win. Make 6 wrong guesses and you lose.
+4. Reveal the whole word to win. Make 6 wrong guesses and you lose. 
 
 ## Architecture
 
