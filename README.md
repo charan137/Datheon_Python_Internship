@@ -10,7 +10,7 @@ A terminal-based Hangman game written in Python. The player guesses a hidden wor
 - 6 incorrect attempts per round
 - ASCII gallows art that updates after every wrong guess
 - Tracks all guessed letters and the wrong ones separately
-- Repeated guesses are detected and do **not** deduct an attempt
+- Repeated guesses are detected and do **not** deduct an attempt 
 - Input validation (single letters a-z only)
 - Multiple rounds with a running win/loss score
 - Graceful exit on Ctrl+C / Ctrl+D
