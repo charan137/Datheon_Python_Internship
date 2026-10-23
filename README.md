@@ -8,7 +8,7 @@ Submission repository for the Datheon Python Programming Internship.
 |---|------|--------|--------|
 | 1 | Hangman Word Guessing Game (Console) | [`task1_hangman/`](task1_hangman) | Complete |
 | 2 | Stock Portfolio Performance Tracker | [`task2_portfolio/`](task2_portfolio) | Complete |
-| 3 | _Optional third task_ | `task3_.../` | Pending |
+| 3 | Automated File Organizer & Cleanup Utility | [`task3_file_organizer/`](task3_file_organizer) | Complete |
 
 ---
 
@@ -93,6 +93,29 @@ python3 portfolio.py
 ```
 
 Quotes may be delayed or reflect the last market close. Pass `--csv PATH` to write snapshots to a different CSV file.
+
+# Task 3: Automated File Organizer & Cleanup Utility
+
+A command-line utility that sorts files into category folders by extension. It previews changes by default, avoids overwriting files, and can optionally scan subdirectories.
+
+## Features
+- Organizes documents, images, videos, audio, archives, code, and unknown file types
+- Defaults to a non-destructive dry run; `--apply` performs the moves
+- Supports opt-in recursive scanning with `--recursive`
+- Renames collisions with numbered suffixes and reports filesystem errors
+- Uses only Python's standard library
+
+## Installation and Usage
+
+Requirements: Python 3.8 or newer. No external libraries are needed.
+
+```bash
+cd task3_file_organizer
+python3 organizer.py ~/Downloads --recursive
+python3 organizer.py ~/Downloads --recursive --apply
+```
+
+The first command previews the planned changes. The second performs them.
 
 ## Author
 Charan
