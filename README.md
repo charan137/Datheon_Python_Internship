@@ -10,6 +10,7 @@ Submission repository for the Datheon Python Programming Internship.
 | 2 | Stock Portfolio Performance Tracker | [`task2_portfolio/`](task2_portfolio) | Complete |
 | 3 | Automated File Organizer & Cleanup Utility | [`task3_file_organizer/`](task3_file_organizer) | Complete |
 | 4 | Rule-Based Interactive Terminal Assistant | [`task4_terminal_assistant/`](task4_terminal_assistant) | Complete |
+| 5 | Enterprise Smart Inventory & Asset System | [`task5_inventory_asset_system/`](task5_inventory_asset_system) | Complete |
 
 ---
 
@@ -139,6 +140,28 @@ python3 chatbot.py
 ```
 
 Pass `--faq PATH` to load a different FAQ JSON file.
+
+# Task 5: Enterprise Smart Inventory & Asset System
+
+An object-oriented inventory system with an abstract `LibraryItem` base class, specialized book, magazine, and digital-media models, checkout and return workflows, overdue fees, and audit reporting.
+
+## Features
+- Encapsulated attributes with validated properties
+- Abstract methods and polymorphic fee and metadata behavior
+- Safe inventory operations with unique IDs and synchronized manager access
+- Checkout and return audit records with tabular inventory and audit reports
+- Uses only Python's standard library
+
+## Installation and Usage
+
+Requirements: Python 3.8 or newer. No external libraries are needed.
+
+```bash
+cd task5_inventory_asset_system
+python3 inventory.py
+```
+
+The manager and audit log are in-memory and reset when the process exits.
 
 ## Author
 Charan
