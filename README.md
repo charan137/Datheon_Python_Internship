@@ -1,66 +1,184 @@
-# Datheon Python Internship
+"""Hangman - a console word guessing game.
 
-Submission repository for the Datheon Python Programming Internship.
+The player has 6 incorrect attempts to guess a hidden word letter by letter.
+Features: ASCII gallows that updates per wrong guess, tracking of guessed
+letters, and no penalty for repeated guesses.
+"""
 
-# Task 1: Hangman Word Guessing Game (Console)
+import random
+import string
 
-A terminal-based Hangman game written in Python. The player guesses a hidden word letter by letter within 6 incorrect attempts.
+MAX_ATTEMPTS = 6
 
-## Features
-- 6 incorrect attempts per round
-- ASCII gallows art that updates after every wrong guess
-- Tracks all guessed letters and the wrong ones separately
-- Repeated guesses are detected and do **not** deduct an attempt 
-- Input validation (single letters a-z only)
-- Multiple rounds with a running win/loss score
-- Graceful exit on Ctrl+C / Ctrl+D
+WORDS = [
+    "python", "variable", "function", "internet", "keyboard", "algorithm",
+    "database", "compiler", "network", "software", "developer", "terminal",
+    "string", "integer", "boolean", "library", "debugging", "iteration",
+]
 
-## Installation
+GALLOWS = [
+    # 0 wrong guesses
+    """
+     +---+
+     |   |
+         |
+         |
+         |
+         |
+    =========""",
+    # 1
+    """
+     +---+
+     |   |
+     O   |
+         |
+         |
+         |
+    =========""",
+    # 2
+    """
+     +---+
+     |   |
+     O   |
+     |   |
+         |
+         |
+    =========""",
+    # 3
+    """
+     +---+
+     |   |
+     O   |
+    /|   |
+         |
+         |
+    =========""",
+    # 4
+    """
+     +---+
+     |   |
+     O   |
+    /|\\  |
+         |
+         |
+    =========""",
+    # 5
+    """
+     +---+
+     |   |
+     O   |
+    /|\\  |
+    /    |
+         |
+    =========""",
+    # 6
+    """
+     +---+
+     |   |
+     O   |
+    /|\\  |
+    / \\  |
+         |
+    =========""",
+]
 
-Requirements: Python 3.8 or newer. No external libraries are needed.
 
-```bash
-git clone https://github.com/charan137/Datheon_Python_Internship.git
-cd Datheon_Python_Internship/task1_hangman
-python hangman.py
-```
+def choose_word(words=WORDS):
+    """Return a random word from the word list (lowercase)."""
+    return random.choice(words).lower()
 
 
+def mask_word(word, guessed):
+    """Return the word with unguessed letters replaced by underscores."""
+    return " ".join(ch if ch in guessed else "_" for ch in word)
 
-## How to Play
-1. A random word is chosen and shown as underscores.
-2. Type one letter per turn and press Enter.
-3. Correct letters are revealed in place; wrong letters add a part to the hangman.
-4. Reveal the whole word to win. Make 6 wrong guesses and you lose. 
 
-## Architecture
+def is_word_guessed(word, guessed):
+    """True if every letter of the word has been guessed."""
+    return all(ch in guessed for ch in word)
 
-The program is split into small, single-purpose functions, with game state kept in local variables inside `play_round`.
 
-```
-main()
- └── loop: play_round() → show score → ask_play_again()
+def validate_guess(raw, guessed):
+    """Validate raw input. Returns (letter, error_message).
 
-play_round()
- ├── choose_word()        pick a random word from WORDS
- ├── display_state()      print gallows, masked word, guessed/wrong letters
- │     └── mask_word()    build "_ a _ _" view of the word
- ├── validate_guess()     check input is a single new letter (no penalty on repeats)
- └── is_word_guessed()    win condition check
-```
+    If the input is valid and new, error_message is None.
+    Repeated letters return an error so no penalty is applied.
+    """
+    guess = raw.strip().lower()
+    if len(guess) != 1 or guess not in string.ascii_lowercase:
+        return None, "Please enter a single letter (a-z)."
+    if guess in guessed:
+        return None, f"You already guessed '{guess}'. No penalty - try another."
+    return guess, None
 
-| Function | Responsibility |
-|----------|----------------|
-| `choose_word()` | Returns a random lowercase word |
-| `mask_word(word, guessed)` | Hides unguessed letters with underscores |
-| `is_word_guessed(word, guessed)` | True when all letters are found |
-| `validate_guess(raw, guessed)` | Returns `(letter, error)`; rejects invalid or repeated input |
-| `display_state(...)` | Renders ASCII art and status lines |
-| `play_round()` | Runs one full game and returns win/loss |
-| `ask_play_again()` | Prompts for another round |
-| `main()` | Top-level loop and score tracking |
 
-**Data structures:** a `set` holds guessed letters (fast lookup, automatically prevents duplicates), a `list` holds the 7 ASCII gallows stages indexed by the wrong-guess count, and a `list` holds the word bank.
+def display_state(word, guessed, wrong_count):
+    """Print the gallows, masked word and guessed letters."""
+    print(GALLOWS[wrong_count])
+    print(f"\nWord:    {mask_word(word, guessed)}")
+    wrong_letters = sorted(g for g in guessed if g not in word)
+    print(f"Guessed: {' '.join(sorted(guessed)) or '-'}")
+    print(f"Wrong:   {' '.join(wrong_letters) or '-'}")
+    print(f"Attempts left: {MAX_ATTEMPTS - wrong_count}\n")
 
-## Author
-Charan
+
+def play_round():
+    """Play a single round. Returns True if the player won."""
+    word = choose_word()
+    guessed = set()
+    wrong_count = 0
+
+    print("\n=== HANGMAN ===")
+    print(f"I'm thinking of a {len(word)}-letter word.")
+
+    while wrong_count < MAX_ATTEMPTS and not is_word_guessed(word, guessed):
+        display_state(word, guessed, wrong_count)
+        letter, error = validate_guess(input("Guess a letter: "), guessed)
+        if error:
+            print(error)
+            continue
+
+        guessed.add(letter)
+        if letter in word:
+            print(f"Good guess! '{letter}' is in the word.")
+        else:
+            wrong_count += 1
+            print(f"Sorry, '{letter}' is not in the word.")
+
+    display_state(word, guessed, wrong_count)
+    if is_word_guessed(word, guessed):
+        print(f"You won! The word was '{word}'.")
+        return True
+    print(f"You lost! The word was '{word}'.")
+    return False
+
+
+def ask_play_again():
+    """Ask whether the player wants another round."""
+    while True:
+        answer = input("\nPlay again? (y/n): ").strip().lower()
+        if answer in ("y", "yes"):
+            return True
+        if answer in ("n", "no"):
+            return False
+        print("Please answer y or n.")
+
+
+def main():
+    wins = losses = 0
+    while True:
+        if play_round():
+            wins += 1
+        else:
+            losses += 1
+        print(f"Score - Wins: {wins}  Losses: {losses}")
+        if not ask_play_again():
+            print("Thanks for playing!")
+            break
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except (KeyboardInterrupt, EOFError):
+        print("\nGame exited. Goodbye!")
