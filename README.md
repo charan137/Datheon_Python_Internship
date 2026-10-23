@@ -9,6 +9,7 @@ Submission repository for the Datheon Python Programming Internship.
 | 1 | Hangman Word Guessing Game (Console) | [`task1_hangman/`](task1_hangman) | Complete |
 | 2 | Stock Portfolio Performance Tracker | [`task2_portfolio/`](task2_portfolio) | Complete |
 | 3 | Automated File Organizer & Cleanup Utility | [`task3_file_organizer/`](task3_file_organizer) | Complete |
+| 4 | Rule-Based Interactive Terminal Assistant | [`task4_terminal_assistant/`](task4_terminal_assistant) | Complete |
 
 ---
 
@@ -116,6 +117,28 @@ python3 organizer.py ~/Downloads --recursive --apply
 ```
 
 The first command previews the planned changes. The second performs them.
+
+# Task 4: Rule-Based Interactive Terminal Assistant
+
+A rule-based terminal chatbot that answers FAQ questions, recognizes multiple intents per message, remembers the previous answer for follow-ups, and provides suggestions when it cannot confidently match a query.
+
+## Features
+- Loads greetings and question-answer pairs from JSON
+- Supports multiple FAQ matches in a single user message
+- Handles contextual repeat requests, fallback suggestions, and clean exit commands
+- Includes an editable sample FAQ dataset and supports custom JSON files
+- Uses only Python's standard library
+
+## Installation and Usage
+
+Requirements: Python 3.8 or newer. No external libraries are needed.
+
+```bash
+cd task4_terminal_assistant
+python3 chatbot.py
+```
+
+Pass `--faq PATH` to load a different FAQ JSON file.
 
 ## Author
 Charan
